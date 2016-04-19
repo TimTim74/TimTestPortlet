@@ -21,8 +21,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class metaDataService {
+    private static final Logger logger = Logger.getLogger(metaDataService.class.getName());
 
     public static String getMetaData(RenderRequest request, RenderResponse response, Model model) {
         HttpServletRequest httpServletRequest =  com.ibm.ws.portletcontainer.portlet.PortletUtils.getHttpServletRequest(request);
@@ -59,9 +62,10 @@ public class metaDataService {
             model.addAttribute("paramHidden", paramHidden);
 
         } catch (NamingException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "NamingException error occured in method getMetaData()", e);
+
         } catch (ModelException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "ModelException error occured in method getMetaData()", e);
         }
 
         return "view";
